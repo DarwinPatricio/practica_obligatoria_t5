@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:practica_obligatoria_t5/providers/routes/rutas.dart';
+import 'package:practica_obligatoria_t5/routes/rutas.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'home',
+      initialRoute: 'intro',
       routes: getAplicacionesRoutes(),
     );
   }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-import 'package:practica_obligatoria_t5/providers/model/currency.dart';
+import 'package:practica_obligatoria_t5/model/currency.dart';
 
 class CurrencyService {
   String _url = "https://fiii-wallet-default-rtdb.firebaseio.com/Currency.json";

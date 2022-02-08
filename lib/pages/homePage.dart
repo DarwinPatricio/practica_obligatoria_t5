@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flag/flag.dart';
-import 'package:practica_obligatoria_t5/providers/model/currency.dart';
-import 'package:practica_obligatoria_t5/providers/services/currencyService.dart';
-import 'package:practica_obligatoria_t5/providers/services/deviceInfo.dart';
+import 'package:practica_obligatoria_t5/model/currency.dart';
+import 'package:practica_obligatoria_t5/services/currencyService.dart';
+import 'package:practica_obligatoria_t5/services/deviceInfo.dart';
 
 class HomePage extends StatelessWidget {
   @override

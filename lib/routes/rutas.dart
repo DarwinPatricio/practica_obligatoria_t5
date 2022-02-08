@@ -5,7 +5,7 @@ import '../pages/introPage.dart';
 
 Map<String, WidgetBuilder> getAplicacionesRoutes() {
   return <String, WidgetBuilder>{
-    'splash': (BuildContext context) => IntroPage(),
+    'intro': (BuildContext context) => IntroPage(),
     'home': (BuildContext context) => HomePage(),
   };
 }
