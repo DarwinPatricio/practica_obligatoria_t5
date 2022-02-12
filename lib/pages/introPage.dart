@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class IntroPage extends StatefulWidget {
   @override
@@ -6,18 +7,16 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
+  List title = ["FII-Wallet", "Divisas", "Cryptos"];
   List Mensajes = [
     "Bienvenido a tu Cartera Virtual de Divisas Y Cryptos",
-    "Bienvenido a tu Cartera Virtual de Divisas Y Cryptos22222",
-    "Bienvenido a tu Cartera Virtual de Divisas Y Cryptos33333"
+    "Mantén tus divisas seguras y haz los cambios entre ellas de manera sencilla",
+    "Usa y almacena tus cryptos, mantenlas seguras en FIII-Wallet"
   ];
-
-  List imagenes = [
-    "Bienvenido a tu Cartera Virtual de Divisas Y Cryptos",
-    "Bienvenido a tu Cartera Virtual de Divisas Y Cryptos4444",
-    "Bienvenido a tu Cartera Virtual de Divisas Y Cryptos5555"
-  ];
+  List imagenes = ["assets/img1.svg", "assets/img3.svg", "assets/img2.svg"];
   int currentPage = 0;
+  PageController pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,8 +25,9 @@ class _IntroPageState extends State<IntroPage> {
           child: Column(
             children: [
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: PageView.builder(
+                    controller: pageController,
                     onPageChanged: (value) {
                       setState(() {
                         currentPage = value;
@@ -36,6 +36,7 @@ class _IntroPageState extends State<IntroPage> {
                     itemCount: Mensajes.length,
                     itemBuilder: (context, index) {
                       return _BodyPage(
+                        title[index],
                         Mensajes[index],
                         imagenes[index],
                       );
@@ -43,32 +44,92 @@ class _IntroPageState extends State<IntroPage> {
               ),
               Expanded(
                   flex: 2,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List<Widget>.generate(
-                                Mensajes.length, (index) => buildDot(index)),
-                          ),
-                        ),
-                        Spacer(
-                          flex: 1,
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(),
-                          onPressed: () {},
-                          child: Text("Siguiente"),
-                        ),
-                        Spacer(
-                          flex: 1,
-                        ),
-                      ],
+                  child: Stack(children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 250, 206, 75),
+                          Color.fromARGB(255, 255, 129, 192),
+                        ],
+                      )),
                     ),
-                  )),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/bottonboard.svg",
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List<Widget>.generate(
+                                  Mensajes.length, (index) => buildDot(index)),
+                            ),
+                          ),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (currentPage == 2) {
+                                    Navigator.pushReplacementNamed(
+                                        context, 'home');
+                                  } else {
+                                    currentPage++;
+
+                                    pageController.nextPage(
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.ease);
+                                  }
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.blueGrey,
+                                ),
+                                alignment: Alignment.center,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.07,
+                                width: MediaQuery.of(context).size.width * 0.33,
+                                child: currentPage == 2
+                                    ? Text(
+                                        "Comienza",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : Text(
+                                        "Siguiente",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                              )),
+                          Spacer(
+                            flex: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ])),
             ],
           ),
         ),
@@ -76,13 +137,76 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 
-  Widget _BodyPage(mensaj, imagen) {
+  Widget _BodyPage(title, mensaj, imagen) {
+    print(imagen);
     return Container(
-      color: Colors.black,
-      child: Text(
-        mensaj,
-        textAlign: TextAlign.center,
-      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color.fromARGB(255, 255, 129, 192),
+          Color.fromARGB(255, 250, 206, 75),
+        ],
+      )),
+      child: Stack(children: [
+        SvgPicture.asset(
+          "assets/topBoard.svg",
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, 'home');
+                    },
+                    child: title == "Cryptos"
+                        ? Text("")
+                        : Text(
+                            "SKIP >>",
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold),
+                          ))
+              ],
+            ),
+            Expanded(
+              child: Stack(children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 60,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey),
+                    ),
+                    SvgPicture.asset(
+                      imagen,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(
+                        mensaj,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ]),
+            )
+          ],
+        ),
+      ]),
     );
   }
 
@@ -93,7 +217,7 @@ class _IntroPageState extends State<IntroPage> {
       height: 6,
       width: currentPage == index ? 20 : 6,
       decoration: BoxDecoration(
-        color: currentPage == index ? Colors.amber : Color(0xFFD8D8D8),
+        color: currentPage == index ? Colors.pink : Colors.blueGrey,
         borderRadius: BorderRadius.circular(3),
       ),
     );

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flag/flag.dart';
 import 'package:practica_obligatoria_t5/model/currency.dart';
+import 'package:practica_obligatoria_t5/providers/appProvider.dart';
+import 'package:practica_obligatoria_t5/services/accountService.dart';
 import 'package:practica_obligatoria_t5/services/currencyService.dart';
 import 'package:practica_obligatoria_t5/services/deviceInfo.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -11,28 +14,30 @@ class HomePage extends StatelessWidget {
 
     return FutureBuilder(
       future: dev.getInfo(),
-      builder:
-          (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [LinearProgressIndicator()],
           );
         } else {
-          Map<String, dynamic> mapa = snapshot.data!;
+          String id = snapshot.data!;
           return FutureBuilder(
             future: CurrencyService().getCurrency(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<Currency>> snapshot2) {
               if (snapshot2.connectionState == ConnectionState.waiting) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [LinearProgressIndicator()],
+                return Container(
+                  color: Colors.amber,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [LinearProgressIndicator()],
+                  ),
                 );
               } else {
                 List<Currency> divisas = snapshot2.data!;
                 return Scaffold(
-                  backgroundColor: Colors.black,
+                  backgroundColor: Colors.amber,
                   appBar: AppBar(
                     title: Text("Informacion"),
                   ),
@@ -40,14 +45,14 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(getIdentificator(mapa)),
+                        Text(id),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 30,
                             child: ClipRRect(
-                                child: Flag.fromString(divisas[0].flag,
+                                child: Flag.fromString(divisas[0].image,
                                     height: 50,
                                     width: 50,
                                     fit: BoxFit.cover,
@@ -60,8 +65,11 @@ class HomePage extends StatelessWidget {
                   floatingActionButton:
                       FloatingActionButton(onPressed: () async {
                     CurrencyService currencyService = CurrencyService();
+                    AccountServices accountServices = AccountServices();
                     await currencyService.getCurrency();
-                    mapa.forEach((key, value) {});
+                    AppProvider ap =
+                        Provider.of<AppProvider>(context, listen: false);
+                    ap.cambiaColor(!ap.cuenta.tema);
                   }),
                 );
               }
@@ -70,20 +78,5 @@ class HomePage extends StatelessWidget {
         }
       },
     );
-  }
-
-  String getIdentificator(Map<String, dynamic> mapa) {
-    if (mapa.containsKey("androidID")) {
-      print(mapa["androidId"]);
-      return mapa["androidId"];
-    } else {
-      if (mapa.containsKey("computerName")) {
-        return "${mapa["computerName"]}${mapa["numberOfCores"]}${mapa["systemMemoryInMegabytes"]}";
-      } else {
-        print(
-            "${mapa["computerName"]}${mapa["numberOfCores"]}${mapa["systemMemoryInMegabytes"]}");
-        return mapa["identifierForVendor"];
-      }
-    }
   }
 }

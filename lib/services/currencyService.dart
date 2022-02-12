@@ -10,7 +10,6 @@ class CurrencyService {
   Future<List<Currency>> getCurrency() async {
     List<Currency> divisas = [];
     final resp = await http.get(Uri.parse(_url));
-    print(resp.body);
     for (var item in jsonDecode(resp.body) as List) {
       divisas.add(Currency.fromMap(item));
     }
