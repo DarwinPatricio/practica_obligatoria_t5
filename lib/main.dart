@@ -23,11 +23,11 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: acc.cuenta.tema
                   ? ThemeData(
-                      primarySwatch: Colors.blue,
+                      primarySwatch: Colors.indigo,
+                      scaffoldBackgroundColor:
+                          Color.fromARGB(255, 247, 215, 231),
                     )
-                  : ThemeData(
-                      primarySwatch: Colors.red,
-                    ),
+                  : ThemeData.dark(),
               initialRoute: 'splash',
               routes: getAplicacionesRoutes(),
             )),

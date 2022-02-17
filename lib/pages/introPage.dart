@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -51,19 +53,23 @@ class _IntroPageState extends State<IntroPage> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Color.fromARGB(255, 250, 206, 75),
-                          Color.fromARGB(255, 255, 129, 192),
+                          Color.fromARGB(255, 253, 173, 213),
+                          Colors.orange,
                         ],
                       )),
                     ),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SvgPicture.asset(
-                            "assets/bottonboard.svg",
-                            fit: BoxFit.cover,
-                            width: MediaQuery.of(context).size.width,
+                          Expanded(child: SizedBox()),
+                          Center(
+                            child: SvgPicture.asset(
+                              "assets/bottonboard.svg",
+                              height: Platform.isWindows
+                                  ? MediaQuery.of(context).size.height * 0.25
+                                  : null,
+                              width: MediaQuery.of(context).size.width,
+                            ),
                           ),
                         ],
                       ),
@@ -145,8 +151,8 @@ class _IntroPageState extends State<IntroPage> {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color.fromARGB(255, 255, 129, 192),
-          Color.fromARGB(255, 250, 206, 75),
+          Colors.orange,
+          Color.fromARGB(255, 253, 173, 213),
         ],
       )),
       child: Stack(children: [

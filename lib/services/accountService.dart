@@ -23,4 +23,18 @@ class AccountServices {
         body: acc.toJson());
     return Account.fromJson(resp.body);
   }
+
+  Future<Account> getAcc(id) async {
+    final resp = await http.get(Uri.parse(
+        "https://fiii-wallet-default-rtdb.firebaseio.com/Accounts/${id}.json"));
+    print(resp.body);
+    return Account.fromJson(resp.body);
+  }
+
+  Future<void> updateAccount(id, account) async {
+    final resp = await http.put(
+        Uri.parse(
+            "https://fiii-wallet-default-rtdb.firebaseio.com/Accounts/${id}.json"),
+        body: account.toJson());
+  }
 }
