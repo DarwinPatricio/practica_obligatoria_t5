@@ -30,14 +30,14 @@ class Apariencia extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10), color: Colors.white60),
             child: Column(
               children: [
-                SwitchListTile(
+                SwitchListTile.adaptive(
                     title: Text("Tema"),
                     subtitle: Text("Oscuro / Claro"),
                     value: account.cuenta.tema,
                     onChanged: (value) async {
                       await account.cambiaTema(value);
                     }),
-                SwitchListTile(
+                SwitchListTile.adaptive(
                     title: Text("Negrita"),
                     subtitle: Text("Normal / Negrita"),
                     value: account.cuenta.negrita,

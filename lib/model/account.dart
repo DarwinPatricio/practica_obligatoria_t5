@@ -9,9 +9,9 @@ class Account {
     required this.tema,
   });
 
-  int crypWallet;
+  double crypWallet;
   int digits;
-  int divWallet;
+  double divWallet;
   bool negrita;
   bool tema;
 
@@ -20,9 +20,9 @@ class Account {
   String toJson() => json.encode(toMap());
 
   factory Account.fromMap(Map<String, dynamic> json) => Account(
-        crypWallet: json["crypWallet"],
+        crypWallet: double.parse(jsonEncode(json["crypWallet"])),
         digits: json["digits"],
-        divWallet: json["divWallet"],
+        divWallet: double.parse(jsonEncode(json["divWallet"])),
         negrita: json["negrita"],
         tema: json["tema"],
       );

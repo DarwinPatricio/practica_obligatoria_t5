@@ -21,7 +21,9 @@ class DivCard extends StatelessWidget {
         child: Center(
           child: ListTile(
             onTap: () {
-              print(account.divisas[index].value);
+              account.cambiaCantidad("");
+              Navigator.pushNamed(context, 'calculadora',
+                  arguments: [account.divisas[index].value, 'divisas']);
             },
             leading: CircleAvatar(
               radius: 30,
@@ -55,10 +57,13 @@ class DivCard extends StatelessWidget {
                       color: Colors.indigo,
                       borderRadius: BorderRadius.circular(30)),
                   child: Center(
-                    child: Text(
-                      "${(account.cuenta.divWallet * account.divisas[index].value).toStringAsFixed(account.cuenta.digits)}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
+                    child: FittedBox(
+                      child: Text(
+                        "${(account.cuenta.divWallet * account.divisas[index].value).toStringAsFixed(account.cuenta.digits)}",
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),

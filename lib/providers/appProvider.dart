@@ -13,6 +13,7 @@ class AppProvider extends ChangeNotifier {
   List<Currency> divisas = [];
   List<Currency> cryptos = [];
   AccountServices ac = AccountServices();
+  String cantidad = "";
 
   getCuenta() async {
     DeviceInfo deviceInfo = DeviceInfo();
@@ -57,6 +58,11 @@ class AppProvider extends ChangeNotifier {
   cambiaDivpWallet(cantidad) async {
     cuenta.divWallet = cantidad;
     await ac.updateAccount(id, cuenta);
+    notifyListeners();
+  }
+
+  cambiaCantidad(valor) async {
+    cantidad = valor;
     notifyListeners();
   }
 }
